@@ -88,9 +88,16 @@ Executed server-side (avoids CORS). Graceful degradation at each step:
 
 ## Footer HTML Template
 
+The `<img>` tag is only included when a logo URL was found during scraping. When `logo` is `null`, omit it entirely — the name/title div renders flush to the left.
+
+The emoji characters (🏢, 📞, 🌐) are intentional — they are part of the footer design and will appear literally in pasted email footers.
+
+The scraped `fontFamily` is applied as a CSS `font-family` value but is not loaded via a `<link>` tag in the generated footer snippet. Email clients that don't have the font installed will fall back to their default sans-serif — this is acceptable for a personal tool.
+
 ```html
 <div style="border-top: 3px solid {primaryColor}; padding-top: 12px; font-family: {fontFamily};">
   <div style="display:flex; align-items:center; gap:12px; margin-bottom:8px;">
+    <!-- Only include img tag when logo is not null -->
     <img src="{logo}" width="40" height="40" style="border-radius:6px;" alt="{companyName} logo">
     <div>
       <div style="font-weight:700; font-size:14px; color:#111;">{name}</div>
