@@ -1,0 +1,17 @@
+{
+  "name": "email-footer-maker",
+  "version": "1.0.0",
+  "description": "Generate branded email footers from a company website",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "jest"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0",
+    "express": "^4.18.0"
+  },
+  "devDependencies": {
+    "jest": "^29.0.0"
+  }
+}
