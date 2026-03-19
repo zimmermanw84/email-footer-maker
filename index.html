@@ -138,7 +138,7 @@
       const logoHtml = logo
         ? `<img src="${esc(logo)}" width="40" height="40" style="border-radius:6px;object-fit:contain;flex-shrink:0;" alt="${esc(companyName)} logo">`
         : '';
-      return `<div style="border-top:3px solid ${primaryColor};padding-top:12px;font-family:${esc(fontFamily)};">
+      return `<div style="border-top:3px solid ${esc(primaryColor)};padding-top:12px;font-family:${esc(fontFamily)};">
   <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;">
     ${logoHtml}
     <div>
@@ -147,7 +147,7 @@
     </div>
   </div>
   <div style="border-top:1px solid #e5e7eb;padding-top:8px;font-size:11px;color:#888;">
-    🏢 ${esc(companyName)} &nbsp;·&nbsp; 📞 ${esc(phone)} &nbsp;·&nbsp; <a href="${esc(url)}" style="color:${primaryColor};text-decoration:none;">🌐 ${esc(domain)}</a>
+    🏢 ${esc(companyName)} &nbsp;·&nbsp; 📞 ${esc(phone)} &nbsp;·&nbsp; <a href="${esc(url)}" style="color:${esc(primaryColor)};text-decoration:none;">🌐 ${esc(domain)}</a>
   </div>
 </div>`;
     }
