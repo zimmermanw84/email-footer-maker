@@ -48,6 +48,8 @@ function extractFont($) {
       return `${name}, system-ui, sans-serif`;
     }
   }
+  const bodyFont = $('body').css('font-family') || $('body').attr('style')?.match(/font-family:\s*([^;]+)/)?.[1];
+  if (bodyFont) return `${bodyFont.trim()}, system-ui, sans-serif`;
   return 'system-ui, sans-serif';
 }
 

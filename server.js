@@ -15,7 +15,8 @@ app.post('/scrape', async (req, res) => {
     const data = await scrapeUrl(url);
     res.json(data);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    const isInputError = err.message === 'Invalid URL' || err.message === 'URL must use http or https';
+    res.status(isInputError ? 400 : 500).json({ error: err.message });
   }
 });
 
