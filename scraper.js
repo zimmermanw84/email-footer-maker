@@ -13,11 +13,11 @@ function extractBrandData(html, baseUrl) {
 
 function extractColor($) {
   const themeColor = $('meta[name="theme-color"]').attr('content');
-  if (themeColor && /^#[0-9a-f]{3,6}$/i.test(themeColor.trim())) {
+  if (themeColor && /^#([0-9a-f]{3}|[0-9a-f]{4}|[0-9a-f]{6})$/i.test(themeColor.trim())) {
     return themeColor.trim();
   }
   const styleContent = $('style').text();
-  const cssVarMatch = styleContent.match(/--(?:primary|brand|accent|color)[^:]*:\s*(#[0-9a-f]{3,6})/i);
+  const cssVarMatch = styleContent.match(/--(?:primary|brand|accent|color)[^:]*:\s*(#(?:[0-9a-f]{6}|[0-9a-f]{4}|[0-9a-f]{3}))/i);
   if (cssVarMatch) return cssVarMatch[1];
   return '#1a1a1a';
 }
@@ -74,6 +74,15 @@ function resolveUrl(href, base) {
 }
 
 async function scrapeUrl(url) {
+  let parsed;
+  try {
+    parsed = new URL(url);
+  } catch {
+    throw new Error('Invalid URL');
+  }
+  if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') {
+    throw new Error('URL must use http or https');
+  }
   const response = await fetch(url);
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
   const html = await response.text();
