@@ -101,7 +101,6 @@
 
     function setMode(mode) {
       activeMode = mode;
-      document.getElementById('url-input-wrap').classList.toggle('hidden', mode !== 'url');
       document.getElementById('image-input-wrap').classList.toggle('hidden', mode !== 'image');
       document.getElementById('company-name-wrap')?.classList.toggle('hidden', mode !== 'image');
       document.getElementById('tab-url').classList.toggle('active', mode === 'url');
@@ -247,8 +246,8 @@
 
       showStatus('success', `✓ Extracted color ${primaryColor} from image.`);
 
-      const url = '';
-      const domain = cn;
+      const url = document.getElementById('url').value.trim();
+      const domain = url ? (() => { try { return new URL(url).hostname.replace(/^www\./, ''); } catch { return url; } })() : '';
       generatedHtml = buildHtmlFooter({ name, title, phone, url, domain, brand });
       generatedText = buildTextFooter({ name, title, phone, url, domain, brand });
 
@@ -283,13 +282,13 @@
     </div>
   </div>
   <div style="border-top:1px solid #e5e7eb;padding-top:8px;font-size:11px;color:#888;">
-    🏢 ${esc(companyName)} &nbsp;·&nbsp; 📞 ${esc(phone)} &nbsp;·&nbsp; <a href="${esc(url)}" style="color:${esc(primaryColor)};text-decoration:none;">🌐 ${esc(domain)}</a>
+    🏢 ${esc(companyName)} &nbsp;·&nbsp; 📞 ${esc(phone)}${url ? ` &nbsp;·&nbsp; <a href="${esc(url)}" style="color:${esc(primaryColor)};text-decoration:none;">🌐 ${esc(domain)}</a>` : ''}
   </div>
 </div>`;
     }
 
     function buildTextFooter({ name, title, phone, url, domain, brand }) {
-      return `--\n${name} | ${title}\n${brand.companyName}\n${phone} | ${domain}`;
+      return `--\n${name} | ${title}\n${brand.companyName}\n${phone}${domain ? ` | ${domain}` : ''}`;
     }
 
     async function copyHtml(btn) {
