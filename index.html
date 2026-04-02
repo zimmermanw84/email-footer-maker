@@ -272,7 +272,7 @@
     function buildHtmlFooter({ name, title, phone, url, domain, brand }) {
       const { primaryColor, logo, fontFamily, companyName } = brand;
       const logoHtml = logo
-        ? `<img src="${esc(logo)}" width="40" height="40" style="border-radius:6px;object-fit:contain;flex-shrink:0;" alt="${esc(companyName)} logo">`
+        ? `<div style="background:${esc(primaryColor)};padding:4px;border-radius:6px;flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;"><img src="${esc(logo)}" width="40" height="40" style="border-radius:4px;object-fit:contain;display:block;" alt="${esc(companyName)} logo"></div>`
         : '';
       return `<div style="border-top:3px solid ${esc(primaryColor)};padding-top:12px;font-family:${esc(fontFamily)};">
   <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;">
