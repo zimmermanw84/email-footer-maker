@@ -28,18 +28,34 @@
     #html-preview { padding: 14px; background: #fafafa; border: 1px solid #e5e7eb; border-radius: 6px; }
     #text-preview { font-family: monospace; font-size: 12px; color: #374151; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 5px; padding: 10px; line-height: 1.6; white-space: pre; }
     .hidden { display: none; }
+    .tabs { display: flex; gap: 0; margin-bottom: 12px; border: 1px solid #d1d5db; border-radius: 6px; overflow: hidden; }
+    .tab-btn { flex: 1; padding: 7px 0; font-size: 12px; font-weight: 600; background: white; border: none; cursor: pointer; color: #6b7280; transition: background .15s, color .15s; }
+    .tab-btn.active { background: #4f46e5; color: white; }
+    .tab-btn:first-child { border-right: 1px solid #d1d5db; }
+    .helper-note { font-size: 11px; color: #9ca3af; margin-top: 4px; }
+    input.error { border-color: #f87171; }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Email Footer Maker</h1>
-    <p class="subtitle">Fill in your details — we'll scrape your company site for brand colors and logo.</p>
+    <p class="subtitle">Fill in your details — provide a website URL or upload your logo directly.</p>
 
     <div class="card">
+      <div class="tabs">
+        <button class="tab-btn active" id="tab-url" onclick="setMode('url')">Website URL</button>
+        <button class="tab-btn" id="tab-image" onclick="setMode('image')">Upload Image</button>
+      </div>
       <div class="grid">
         <div>
-          <label for="url">Company Website URL</label>
-          <input id="url" type="url" placeholder="https://acme.com">
+          <div id="url-input-wrap">
+            <label for="url">Company Website URL</label>
+            <input id="url" type="url" placeholder="https://acme.com">
+          </div>
+          <div id="image-input-wrap" class="hidden">
+            <label for="image-file">Logo Image</label>
+            <input id="image-file" type="file" accept="image/*">
+          </div>
         </div>
         <div>
           <label for="name">Full Name</label>
