@@ -93,6 +93,22 @@
   </div>
 
   <script>
+    let activeMode = 'url'; // 'url' | 'image'
+
+    function setMode(mode) {
+      activeMode = mode;
+      document.getElementById('url-input-wrap').classList.toggle('hidden', mode !== 'url');
+      document.getElementById('image-input-wrap').classList.toggle('hidden', mode !== 'image');
+      document.getElementById('company-name-wrap')?.classList.toggle('hidden', mode !== 'image');
+      document.getElementById('tab-url').classList.toggle('active', mode === 'url');
+      document.getElementById('tab-image').classList.toggle('active', mode === 'image');
+      document.getElementById('url').classList.remove('error');
+      document.getElementById('image-file').classList.remove('error');
+      document.getElementById('name').classList.remove('error');
+      hideResults();
+      document.getElementById('status').className = 'status';
+    }
+
     let generatedHtml = '';
     let generatedText = '';
 
