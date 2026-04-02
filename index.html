@@ -131,9 +131,9 @@
               if (r > 230 && g > 230 && b > 230) continue; // skip near-white
               if (r < 25 && g < 25 && b < 25) continue; // skip near-black
               // Quantize to reduce noise
-              const qr = Math.round(r / 16) * 16;
-              const qg = Math.round(g / 16) * 16;
-              const qb = Math.round(b / 16) * 16;
+              const qr = Math.floor(r / 16) * 16;
+              const qg = Math.floor(g / 16) * 16;
+              const qb = Math.floor(b / 16) * 16;
               const key = `${qr},${qg},${qb}`;
               counts[key] = (counts[key] || 0) + 1;
             }
