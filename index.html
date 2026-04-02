@@ -109,6 +109,47 @@
       document.getElementById('status').className = 'status';
     }
 
+    function extractColorFromImage(file) {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const img = new Image();
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            // Sample at most 100x100 to keep it fast
+            const scale = Math.min(1, 100 / Math.max(img.width, img.height));
+            canvas.width = Math.round(img.width * scale);
+            canvas.height = Math.round(img.height * scale);
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            const { data } = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+            const counts = {};
+            for (let i = 0; i < data.length; i += 4) {
+              const r = data[i], g = data[i + 1], b = data[i + 2], a = data[i + 3];
+              if (a < 128) continue; // skip transparent
+              if (r > 230 && g > 230 && b > 230) continue; // skip near-white
+              if (r < 25 && g < 25 && b < 25) continue; // skip near-black
+              // Quantize to reduce noise
+              const qr = Math.round(r / 16) * 16;
+              const qg = Math.round(g / 16) * 16;
+              const qb = Math.round(b / 16) * 16;
+              const key = `${qr},${qg},${qb}`;
+              counts[key] = (counts[key] || 0) + 1;
+            }
+
+            const top = Object.entries(counts).sort((a, b) => b[1] - a[1])[0];
+            if (!top) { resolve('#1a1a1a'); return; }
+            const [r, g, b] = top[0].split(',').map(Number);
+            const hex = '#' + [r, g, b].map(v => v.toString(16).padStart(2, '0')).join('');
+            resolve(hex);
+          };
+          img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
     let generatedHtml = '';
     let generatedText = '';
 
