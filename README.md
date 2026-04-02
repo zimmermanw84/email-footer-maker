@@ -2,12 +2,6 @@
 
 A local web tool that generates branded email footers. Give it a company URL and your contact details — it scrapes the site for brand colors, logo, and company name, then outputs a styled HTML footer and a plain text version, both ready to copy-paste.
 
-## Demo
-
-![Email Footer Maker UI](https://user-images.githubusercontent.com/placeholder/demo.png)
-
-> Enter a company website, your name, title, and phone number. Click Generate. Copy the footer into your email client.
-
 ## Features
 
 - Scrapes primary brand color, logo, and company name from any website
